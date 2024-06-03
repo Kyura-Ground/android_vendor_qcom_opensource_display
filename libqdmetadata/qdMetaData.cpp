@@ -306,6 +306,10 @@ int setMetaDataVa(MetaData_t *data, DispParamType paramType,
     if (!param) {
       setGralloc4Array(data, paramType, false);
       switch (paramType) {
+        case LINEAR_FORMAT:
+          data->operation &= ~LINEAR_FORMAT;
+          data->linearFormat = 0;
+          break;
         case SET_VIDEO_PERF_MODE:
           data->isVideoPerfMode = 0;
           break;
@@ -441,6 +445,10 @@ int clearMetaDataVa(MetaData_t *data, DispParamType paramType) {
         return -EINVAL;
     data->operation &= ~paramType;
     switch (paramType) {
+        case LINEAR_FORMAT:
+            setGralloc4Array(data, paramType, false);
+            data->linearFormat = 0;
+            break;
         case SET_VIDEO_PERF_MODE:
             data->isVideoPerfMode = 0;
             break;
